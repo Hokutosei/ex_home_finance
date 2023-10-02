@@ -14,10 +14,17 @@ defmodule ExHomeFinanceWeb.MonthlyController do
         conn
         |> put_status(:created)
         |> json(monthly)
+
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_status(:unprocessable_entity)
         |> halt()
+
+      _ ->
+        conn
+        |> put_status(:internal_server_error)
+        |> json(%{error: "Unexpected error"})
     end
   end
+
 end

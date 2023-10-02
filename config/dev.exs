@@ -1,14 +1,24 @@
 import Config
 
 # Configure your database
+# config :ex_home_finance, ExHomeFinance.Repo,
+#   username: "postgres",
+#   password: "jinpol040585",
+#   hostname: "192.168.2.147",
+#   database: "ex_home_finance_dev",
+#   stacktrace: true,
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 config :ex_home_finance, ExHomeFinance.Repo,
-  username: "postgres",
-  password: "jinpol040585",
+  username: "root",
+  password: "jinpol0405",
   hostname: "192.168.2.147",
+  port: 4309,
   database: "ex_home_finance_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

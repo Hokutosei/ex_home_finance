@@ -7,6 +7,7 @@ defmodule ExHomeFinance.Repo.Migrations.AddMonthliesTable do
   def change do
     create table(:monthlies, primary_key: false) do
       add :id, :uuid, primary_key: true
+      add :year, :string
       add :name, :string
       add :monthly_id, :uuid, autogenerate: true
       add :total_amount, :float
