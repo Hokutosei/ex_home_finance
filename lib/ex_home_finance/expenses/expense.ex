@@ -11,20 +11,28 @@ defmodule ExHomeFinance.Expenses.Expense do
 #     monthly_id CHAR(36) NOT NULL
 # );
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  @derive {Jason.Encoder, only: [:id, :year, :month_name, :monthly_id, :amount, :inserted_at, :updated_at]}
+  @derive {Jason.Encoder, only: [:id, :year, :month_name, :monthly_id, :amount, :created_at]}
   schema "ExpenseItem" do
     field :year, :string
     field :month_name, :string
-    field :created_at, :string
-    field :amount, :float
     field :monthly_id, Ecto.UUID, autogenerate: true
-    timestamps()
+    field :created_at, :naive_datetime
+    field :amount, :float
   end
 
   def changeset(expense, attrs) do
     expense
-    |> cast(attrs, [:year, :month_name, :created_at, :amount, :id, :monthly_id])
-    |> validate_required([:year, :month_name, :created_at, :amount, :id, :monthly_id])
+    |> cast(attrs, [:year, :month_name, :created_at, :amount, :monthly_id])
+    |> validate_required([:year, :month_name, :amount, :monthly_id])
   end
 
+end
+
+defimpl Jason.Encoder, for: Ecto.UUID do
+  def encode(uuid, _opts) when is_binary(uuid) do
+    IO.puts("encode uuid ---------")
+    uuid
+    |> Ecto.UUID.cast!()
+    |> Jason.Encode.string(_opts)
+  end
 end

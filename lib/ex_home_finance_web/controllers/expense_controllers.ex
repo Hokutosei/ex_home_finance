@@ -1,19 +1,20 @@
-defmodule ExHomeFinanceWeb.MonthlyController do
+defmodule ExHomeFinanceWeb.ExpenseController do
   use ExHomeFinanceWeb, :controller
 
-  alias ExHomeFinance.Monthlies
+  alias ExHomeFinance.Expenses
 
   def index(conn, _params) do
-    monthlies = Monthlies.list_monthlies()
-    json(conn, monthlies)
+    expenses = Expenses.list_expenses()
+    json(conn, expenses)
   end
 
-  def create(conn, %{"monthly" => monthly_params}) do
-    case Monthlies.create_monthly(monthly_params) do
-      {:ok, monthly} ->
+  def create(conn, %{"expense" => expense_params}) do
+    IO.puts("create expense")
+    case Expenses.create_expense(expense_params) do
+      {:ok, expense} ->
         conn
         |> put_status(:created)
-        |> json(monthly)
+        |> json(expense)
 
       {:error, %Ecto.Changeset{} = _changeset} ->
         conn
@@ -26,5 +27,4 @@ defmodule ExHomeFinanceWeb.MonthlyController do
         |> json(%{error: "Unexpected error"})
     end
   end
-
 end

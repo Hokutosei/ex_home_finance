@@ -33,6 +33,7 @@ end
 
 defimpl Jason.Encoder, for: Ecto.UUID do
   def encode(uuid, _opts) when is_binary(uuid) do
+    IO.puts("encode uuid monthly ---------")
     uuid
     |> Ecto.UUID.cast!()
     |> Jason.Encode.string(_opts)

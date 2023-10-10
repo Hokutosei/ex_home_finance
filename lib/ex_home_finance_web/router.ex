@@ -9,6 +9,7 @@ defmodule ExHomeFinanceWeb.Router do
     pipe_through :api
 
     resources "/monthlies", MonthlyController, only: [:index, :create]
+    resources "/expenses", ExpenseController, only: [:index, :create]
   end
 
   # Enable LiveDashboard in development
