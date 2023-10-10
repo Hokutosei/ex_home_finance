@@ -2,8 +2,6 @@ defmodule ExHomeFinance.Expenses.Expense do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
-  @derive {Jason.Encoder, only: [:id, :year, :name, :monthly_id, :total_amount, :inserted_at, :updated_at]}
 #   CREATE TABLE IF NOT EXISTS ExpenseItem (
 #     year VARCHAR(255),
 #     month_name VARCHAR(255),
@@ -12,14 +10,15 @@ defmodule ExHomeFinance.Expenses.Expense do
 #     id CHAR(36) NOT NULL,
 #     monthly_id CHAR(36) NOT NULL
 # );
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @derive {Jason.Encoder, only: [:id, :year, :month_name, :monthly_id, :amount, :inserted_at, :updated_at]}
   schema "ExpenseItem" do
     field :year, :string
     field :month_name, :string
     field :created_at, :string
     field :amount, :float
-    field :id, Ecto.UUID, autogenerate: true
     field :monthly_id, Ecto.UUID, autogenerate: true
-
+    timestamps()
   end
 
   def changeset(expense, attrs) do
