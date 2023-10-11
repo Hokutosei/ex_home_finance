@@ -5,7 +5,7 @@ defmodule ExHomeFinance.Monthlies do
   alias ExHomeFinance.Monthlies.Monthly
 
   def list_monthlies do
-    result = Ecto.Adapters.SQL.query!(Repo, "SELECT * FROM monthlies ORDER BY inserted_at DESC")
+    result = Ecto.Adapters.SQL.query!(Repo, "SELECT * FROM Monthlies ORDER BY inserted_at DESC")
     Enum.map(result.rows, fn [id, year, name, monthly_id, total_amount, inserted_at, updated_at] ->
       %ExHomeFinance.Monthlies.Monthly{
         id: Ecto.UUID.load!(id),
@@ -22,6 +22,8 @@ defmodule ExHomeFinance.Monthlies do
   def get_monthly!(id), do: Repo.get!(Monthly, id)
 
   def create_monthly(attrs \\ %{}) do
+    attrs = Map.put_new(attrs, "id", Ecto.UUID.generate())
+
     %Monthly{}
     |> Monthly.changeset(attrs)
     |> Repo.insert()

@@ -10,20 +10,20 @@ defmodule ExHomeFinance.Expenses.Expense do
 #     id CHAR(36) NOT NULL,
 #     monthly_id CHAR(36) NOT NULL
 # );
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @primary_key {:id, :string, autogenerate: false}
   @derive {Jason.Encoder, only: [:id, :year, :month_name, :monthly_id, :amount, :created_at]}
   schema "ExpenseItem" do
     field :year, :string
     field :month_name, :string
-    field :monthly_id, Ecto.UUID, autogenerate: true
     field :created_at, :naive_datetime
     field :amount, :float
+    field :monthly_id, :string
   end
 
   def changeset(expense, attrs) do
     expense
-    |> cast(attrs, [:year, :month_name, :created_at, :amount, :monthly_id])
-    |> validate_required([:year, :month_name, :amount, :monthly_id])
+    |> cast(attrs, [:id, :year, :month_name, :created_at, :amount, :monthly_id])
+    |> validate_required([:id, :year, :month_name, :amount, :monthly_id])
   end
 
 end

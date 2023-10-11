@@ -2,40 +2,40 @@ defmodule ExHomeFinance.Monthlies.Monthly do
   use Ecto.Schema
   import Ecto.Changeset
 
-# mysql
-#   CREATE TABLE IF NOT EXISTS your_table_name (
-#     total_amount DOUBLE PRECISION,
-#     inserted_at TIMESTAMP,
-#     updated_at TIMESTAMP,
-#     monthly_id CHAR(36),
-#     id CHAR(36),
+# CREATE TABLE IF NOT EXISTS Monthlies (
+#     id VARCHAR(36) NOT NULL PRIMARY KEY,
+#     year VARCHAR(255),
 #     name VARCHAR(255),
-#     year VARCHAR(255)
+#     monthly_id VARCHAR(36),
+#     total_amount DOUBLE,
+#     inserted_at DATETIME NOT NULL,
+#     updated_at DATETIME NOT NULL
 # );
 
 
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
+
+  @primary_key {:id, :string, autogenerate: false}
   @derive {Jason.Encoder, only: [:id, :year, :name, :monthly_id, :total_amount, :inserted_at, :updated_at]}
-  schema "monthlies" do
+  schema "Monthlies" do
     field :year, :string
     field :name, :string
-    field :monthly_id, Ecto.UUID, autogenerate: true
+    field :monthly_id, :string
     field :total_amount, :float
     timestamps()
   end
 
   def changeset(monthly, attrs) do
     monthly
-    |> cast(attrs, [:year, :name, :monthly_id, :total_amount])
-    |> validate_required([:name, :monthly_id, :total_amount])
+    |> cast(attrs, [:id, :year, :name, :monthly_id, :total_amount])
+    |> validate_required([:id, :name, :monthly_id, :total_amount])
   end
 end
 
 defimpl Jason.Encoder, for: Ecto.UUID do
-  def encode(uuid, _opts) when is_binary(uuid) do
+  def encode(uuid, opts) when is_binary(uuid) do
     IO.puts("encode uuid monthly ---------")
     uuid
     |> Ecto.UUID.cast!()
-    |> Jason.Encode.string(_opts)
+    |> Jason.Encode.string(opts)
   end
 end

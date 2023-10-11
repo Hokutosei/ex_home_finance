@@ -20,11 +20,35 @@ defmodule ExHomeFinance.Expenses do
 
   def get_expense!(id), do: Repo.get!(Expense, id)
 
+  # def create_expense(attrs \\ %{}) do
+  #   attrs = Map.put(attrs, "created_at", DateTime.truncate(DateTime.utc_now(), :second))
+  #   %Expense{}
+  #   |> Expense.changeset(attrs)
+  #   |> Repo.insert()
+  # end
+
   def create_expense(attrs \\ %{}) do
-    attrs = Map.put(attrs, "created_at", DateTime.truncate(DateTime.utc_now(), :second))
+    # attrs = Map.put(
+    #   # Map.update!(attrs, "monthly_id", &Ecto.UUID.cast!/1),
+    #   "id", Ecto.UUID.generate(),
+    #   "created_at", DateTime.truncate(DateTime.utc_now(), :second)
+    # )
+    attrs = Map.put_new(attrs, "created_at", DateTime.truncate(DateTime.utc_now(), :second))
+    |> Map.put_new("id", Ecto.UUID.generate())
+
     %Expense{}
     |> Expense.changeset(attrs)
     |> Repo.insert()
   end
+
+  # def create_expense(attrs \\ %{}) do
+  #   attrs = Map.put_new(attrs, "created_at", DateTime.truncate(DateTime.utc_now(), :second))
+  #           |> Map.put_new("monthly_id", Ecto.UUID.generate())
+
+  #   %Expense{}
+  #   |> Expense.changeset(attrs)
+  #   |> Repo.insert()
+  # end
+
 
 end

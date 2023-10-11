@@ -16,7 +16,7 @@ defmodule ExHomeFinanceWeb.ExpenseController do
         |> put_status(:created)
         |> json(expense)
 
-      {:error, %Ecto.Changeset{} = _changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_status(:unprocessable_entity)
         |> halt()
