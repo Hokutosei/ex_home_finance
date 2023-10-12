@@ -8,7 +8,7 @@ defmodule ExHomeFinanceWeb.ExpenseController do
     json(conn, expenses)
   end
 
-  def create(conn, %{"expense" => expense_params}) do
+  def create(conn, expense_params) do
     IO.puts("create expense")
     case Expenses.create_expense(expense_params) do
       {:ok, expense} ->
@@ -27,4 +27,16 @@ defmodule ExHomeFinanceWeb.ExpenseController do
         |> json(%{error: "Unexpected error"})
     end
   end
+
+  def get_expense_by_month(conn, %{"year" => year, "month" => month}) do
+    IO.puts("get_expense_by_month")
+    IO.inspect(year)
+    IO.inspect(month)
+
+    expenses = Expenses.list_expenses_by_month(year, month)
+    sum = Expenses.sum_expenses_by_month(year, month)
+    json(conn, %{expenses: expenses, month_total: sum})
+  end
+
+
 end

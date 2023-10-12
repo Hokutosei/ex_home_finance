@@ -10,6 +10,8 @@ defmodule ExHomeFinanceWeb.Router do
 
     resources "/monthlies", MonthlyController, only: [:index, :create]
     resources "/expenses", ExpenseController, only: [:index, :create]
+
+    get "/get_expenses/:year/:month", ExpenseController, :get_expense_by_month
   end
 
   # Enable LiveDashboard in development
