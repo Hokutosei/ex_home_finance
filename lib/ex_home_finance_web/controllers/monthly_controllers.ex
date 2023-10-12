@@ -8,7 +8,7 @@ defmodule ExHomeFinanceWeb.MonthlyController do
     json(conn, monthlies)
   end
 
-  def create(conn, %{"monthly" => monthly_params}) do
+  def create(conn, monthly_params) do
     case Monthlies.create_monthly(monthly_params) do
       {:ok, monthly} ->
         conn
